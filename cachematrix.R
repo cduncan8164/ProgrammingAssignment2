@@ -1,15 +1,31 @@
-## Put comments here that give an overall description of what your
-## functions do
+## The first will find if the inverse of the matrix already exists
+## The second will solve the inverse of the matrix if it does not already exist
 
-## Write a short comment describing this function
+## Searches to see if the inverse of the matrix already exists
 
 makeCacheMatrix <- function(x = matrix()) {
-
+	inv <- NULL
+	set <- function(y) {
+		x <<- y
+		inv <<- NULL
+	}
+	get <- function() x
+	setinv <- function(inverse) inv <<- inverse
+	getinv <- function() inv
+	list(inv = inv, get = get, setinv = setinv, getinv = getinv)
 }
 
 
-## Write a short comment describing this function
+## Solves the inverse of the matrix
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+	inv <- x$getinv()
+	if(!is.null(inv)) {
+		message("getting cached data")
+		return(inv)
+	}
+	mat <- x$get()
+	inv <- solve(mat, ...)
+	x$setinv(inv)
+	inv
 }
